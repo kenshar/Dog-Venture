@@ -1,325 +1,373 @@
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: 'Arial', sans-serif;
-      line-height: 1.6;
-      color: #333;
-      background-color: #f9f9f9;
-    }
-    
-    /* Header styles */
-    header {
-      background-color: #4a7c59;
-      color: white;
-      padding: 1rem 2rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    
-    .header-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      color: #f8e16c;
-    }
-    
-    nav {
-      display: flex;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-    
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s;
-    }
-    
-    nav a:hover {
-      color: #f8e16c;
-    }
-    
-    /* Hero section */
-    .hero {
-      position: relative;
-      height: 500px;
-      overflow: hidden;
-    }
-    
-    .hero img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    
-    .hero-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.4);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: white;
-      padding: 2rem;
-    }
-    
-    .hero-overlay h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-    
-    .hero-overlay p {
-      font-size: 1.2rem;
-      max-width: 600px;
-    }
-    
-    /* Services section */
-    .services {
-      padding: 3rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    .services h2 {
-      text-align: left;
-      font-size: 2.2rem;
-      margin-bottom: 2rem;
-      color: #4a7c59;
-      position: relative;
-      padding-bottom: 0.5rem;
-    }
-    
-    .services h2:after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 80px;
-      height: 3px;
-      background-color: #f8e16c;
-    }
-    
-    .flex-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: center;
-    }
-    
-    .service-box {
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
-      flex: 1 1 300px;
-      max-width: 350px;
-    }
-    
-    .service-box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    }
-    
-    .service-box img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      display: block;
-    }
-    
-    .service-content {
-      padding: 1.5rem;
-    }
-    
-    .service-box h3 {
-      color: #4a7c59;
-      margin-bottom: 0.5rem;
-      font-size: 1.5rem;
-    }
-    
-    .service-box p {
-      color: #666;
-      margin-bottom: 1rem;
-    }
-    
-    .btn {
-      display: inline-block;
-      background-color: #4a7c59;
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
-    
-    .btn:hover {
-      background-color: #3a6349;
-    }
-    
-    /* Contact section */
-    .contact {
-      background-color: #4a7c59;
-      color: white;
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-    
-    .contact h2 {
-      font-size: 2.2rem;
-      margin-bottom: 2rem;
-      color: #f8e16c;
-    }
-    
-    .contact p {
-      margin-bottom: 0.5rem;
-      font-size: 1.1rem;
-    }
-    
-    /* Footer */
-    footer {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 1.5rem;
-      margin-top: 2rem;
-    }
-    
-    /* Responsive design */
-    @media (max-width: 768px) {
-      .header-content {
-        flex-direction: column;
-        text-align: center;
-      }
-      
-      nav {
-        margin-top: 1rem;
-        justify-content: center;
-      }
-      
-      .hero {
-        height: 300px;
-      }
-      
-      .hero-overlay h2 {
-        font-size: 1.8rem;
-      }
-      
-      .hero-overlay p {
-        font-size: 1rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 2rem;
-      }
-      
-      nav {
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-      
-      .services h2 {
-        text-align: center;
-      }
-      
-      .services h2:after {
-        left: 50%;
-        transform: translateX(-50%);
-      }
-    }
-    .adopt {
-      background-color: #e0f7fa;
-      color: #00796b;
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-    .dog-section {
-  padding: 2rem;
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.dog-grid {
-  display: flex;
-  flex-wrap: wrap; /* Allows items to wrap to next line on small screens */
-  gap: 1.5rem; /* Space between cards */
-  justify-content: center; /* Centers cards horizontally */
-  margin-bottom: 2rem;
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
 }
 
-.dog-card {
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  width: 280px; /* Fixed width for consistent card size */
-  text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* Header styles */
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.dog-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
 }
 
-.dog-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover; /* Ensures image fills space nicely */
+header h1 {
+    font-size: 2rem;
+    color: #f1c40f;
 }
 
-.dog-card h4 {
-  margin: 1rem 0 0.5rem;
-  font-size: 1.25rem;
-  color: #333;
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1.5rem;
+    transition: color 0.3s;
 }
 
-.dog-card p {
-  color: #666;
-  margin-bottom: 1rem;
-  padding: 0 1rem;
+nav a:hover {
+    color: #f1c40f;
+}
+
+/* Hero section */
+.hero {
+    position: relative;
+    height: 70vh;
+    margin-top: 80px;
+    overflow: hidden;
+}
+
+.hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 0 2rem;
+}
+
+.hero-overlay h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero-overlay p {
+    font-size: 1.5rem;
+}
+
+/* Services section */
+.services {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.services h3 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #2c3e50;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.service-box {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    width: 100%;
+    max-width: 350px;
+    transition: transform 0.3s;
+}
+
+.service-box:hover {
+    transform: translateY(-5px);
+}
+
+.service-box img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.service-content {
+    padding: 1.5rem;
+}
+
+.service-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.service-content p {
+    margin-bottom: 1.5rem;
 }
 
 .btn {
-  display: inline-block;
-  background-color: #ff6b6b;
-  color: white;
-  text-decoration: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 30px;
-  font-weight: bold;
-  transition: background-color 0.2s;
+    background: #f1c40f;
+    color: #2c3e50;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
 }
 
 .btn:hover {
-  background-color: #ff5252;
+    background: #f39c12;
 }
 
-/* "View All Dogs" button styling */
-.view-all-btn {
-  display: block;
-  margin: 0 auto;
-  text-align: center;
-  width: fit-content;
+/* Service forms */
+.service-form {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.service-form h4 {
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.btn-submit {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-cancel {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Adoption section */
+.adopt {
+    padding: 4rem 2rem;
+    background: #f8f9fa;
+    flex-direction: column;
+    justify-self: space-between;
+
+}
+.adopt h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.adopt > p {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+}
+
+.dog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dog-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.dog-card:hover {
+    transform: translateY(-5px);
+}
+
+.dog-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.dog-card h4 {
+    padding: 1rem 1rem 0.5rem;
+    font-size: 1.3rem;
+}
+
+.dog-card p {
+    padding: 0 1rem 1rem;
+}
+
+.adopt-container {
+    padding: 0 1rem 1rem;
+    position: relative;
+}
+
+.adopt-btn {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+}
+
+.adopt-form {
+    
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 10;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+.adopt-form h4 {
+    margin-bottom: 1rem;
+}
+
+.adoption-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Contact section */
+.contact {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: #2c3e50;
+    color: white;
+}
+
+.contact h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.contact p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+/* Footer */
+footer {
+    background: #1a252f;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    nav a {
+        margin: 0 0.5rem;
+    }
+    
+    .hero-overlay h2 {
+        font-size: 2rem;
+    }
+    
+    .hero-overlay p {
+        font-size: 1.2rem;
+    }
+    
+    .form-row {
+        flex-direction: column;
+    }
+    
+    .dog-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
 }

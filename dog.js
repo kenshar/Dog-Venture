@@ -6,52 +6,81 @@ document.addEventListener('DOMContentLoaded', function() {
     // Service form functionality
     initializeServiceForms();
     
+    // Adoption form functionality
+    initializeAdoptForms();
+    
     // Set minimum date for all date inputs to today
     setMinimumDates();
     
     // Initialize any additional features
     initializeScrollEffects();
+
+    // Initialize form helpers
+    initializeFormHelpers();
 });
 
 /**
  * Initialize service form interactions
  */
 function initializeServiceForms() {
-    // Service button click handlers
     document.querySelectorAll('.service-btn').forEach(button => {
         button.addEventListener('click', function() {
             const service = this.getAttribute('data-service');
             const form = document.getElementById(`${service}-service-form`);
             
+            if (!form) {
+                console.error(`Form with id ${service}-service-form not found`);
+                return;
+            }
+            
             // Hide all other service forms
             document.querySelectorAll('.service-form').forEach(f => {
                 if (f !== form) {
+                    f.classList.remove('active');
                     f.style.display = 'none';
-                    // Reset corresponding button text and style
                     const otherBtn = f.parentElement.querySelector('.service-btn');
-                    const otherService = otherBtn.getAttribute('data-service');
-                    otherBtn.textContent = `Book ${capitalizeFirst(otherService)}`;
-                    otherBtn.style.background = '#f39c12';
+                    if (otherBtn) {
+                        const otherService = otherBtn.getAttribute('data-service');
+                        otherBtn.textContent = `Book ${capitalizeFirst(otherService)}`;
+                        otherBtn.classList.remove('cancel-btn');
+                    }
                 }
             });
             
             // Toggle current form visibility
-            if (form.style.display === 'none' || form.style.display === '') {
-                showServiceForm(form, this, service);
+            if (form.classList.contains('active')) {
+                // Hide form
+                form.classList.remove('active');
+                form.style.display = 'none';
+                this.textContent = `Book ${capitalizeFirst(service)}`;
+                this.classList.remove('cancel-btn');
             } else {
-                hideServiceForm(form, this, service);
+                // Show form
+                form.classList.add('active');
+                form.style.display = 'block';
+                this.textContent = `Cancel ${capitalizeFirst(service)}`;
+                this.classList.add('cancel-btn');
+                
+                // Scroll to form
+                setTimeout(() => {
+                    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
             }
         });
     });
 
-    // Cancel button functionality
-    document.querySelectorAll('.btn-cancel').forEach(button => {
+    // Cancel buttons inside service forms
+    document.querySelectorAll('.service-form .btn-cancel').forEach(button => {
         button.addEventListener('click', function() {
             const form = this.closest('.service-form');
             const serviceBtn = form.parentElement.querySelector('.service-btn');
-            const service = serviceBtn.getAttribute('data-service');
-            
-            hideServiceForm(form, serviceBtn, service);
+            if (serviceBtn) {
+                const service = serviceBtn.getAttribute('data-service');
+                form.classList.remove('active');
+                form.style.display = 'none';
+                serviceBtn.textContent = `Book ${capitalizeFirst(service)}`;
+                serviceBtn.classList.remove('cancel-btn');
+            }
         });
     });
 
@@ -65,75 +94,80 @@ function initializeServiceForms() {
 }
 
 /**
- * Show service form
+ * Initialize adoption form interactions
  */
-function showServiceForm(form, button, service) {
-    form.style.display = 'block';
-    button.textContent = `Cancel ${capitalizeFirst(service)}`;
-    button.style.background = '#e74c3c';
-    
-    // Smooth scroll to form
-    setTimeout(() => {
-        form.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'nearest' 
-        });
-    }, 100);
-}
-
-/**
- * Hide service form
- */
-function hideServiceForm(form, button, service) {
-    form.style.display = 'none';
-    button.textContent = `Book ${capitalizeFirst(service)}`;
-    button.style.background = '#f39c12';
-    
-    // Clear any success messages
-    const successMsg = form.querySelector('.form-success');
-    if (successMsg) {
-        successMsg.style.display = 'none';
-    }
-}
-
-/**
- * Handle form submission
- */
-function handleFormSubmission(form) {
-    // Create or show success message
-    let successMsg = form.querySelector('.form-success');
-    if (!successMsg) {
-        successMsg = document.createElement('div');
-        successMsg.className = 'form-success';
-        successMsg.innerHTML = `
-            <i class="fas fa-check-circle"></i> 
-            Your booking request has been submitted successfully! We'll contact you shortly.
-        `;
-        form.insertBefore(successMsg, form.firstChild);
-    }
-    
-    // Show success message with animation
-    successMsg.style.display = 'block';
-    successMsg.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'center' 
+function initializeAdoptForms() {
+    // Hide all adopt forms initially
+    document.querySelectorAll('.adopt-form').forEach(form => {
+        form.classList.remove('active');
+        form.style.display = 'none';
     });
-    
-    // Reset form
-    form.reset();
-    
-    // Hide success message after 5 seconds
-    setTimeout(() => {
-        successMsg.style.display = 'none';
-    }, 5000);
-    
-    // Log form data (for debugging/development)
-    const formData = new FormData(form);
-    console.log('Form submitted with data:', Object.fromEntries(formData));
+
+    // Show relevant adopt form when "Adopt Me" clicked
+    document.querySelectorAll('.adopt-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const dogName = this.getAttribute('data-dog').toLowerCase().replace(/\s+/g, '-');
+            const formId = `adopt-form-${dogName}`;
+            const form = document.getElementById(formId);
+
+            if (!form) {
+                console.error(`Form with id ${formId} not found`);
+                return;
+            }
+
+            // Hide other adopt forms
+            document.querySelectorAll('.adopt-form').forEach(f => {
+                if (f !== form) {
+                    f.classList.remove('active');
+                    f.style.display = 'none';
+                }
+            });
+
+            // Toggle current form
+            if (form.classList.contains('active')) {
+                form.classList.remove('active');
+                form.style.display = 'none';
+            } else {
+                form.classList.add('active');
+                form.style.display = 'block';
+                
+                // Scroll to form
+                setTimeout(() => {
+                    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+        });
+    });
+
+    // Cancel buttons inside adopt forms
+    document.querySelectorAll('.adopt-form .btn-cancel').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const form = this.closest('.adopt-form');
+            form.classList.remove('active');
+            form.style.display = 'none';
+        });
+    });
+
+    // Handle adopt form submissions
+    document.querySelectorAll('.adoption-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleFormSubmission(this);
+        });
+    });
 }
 
 /**
- * Set minimum date for date inputs to today
+ * Helper function to capitalize first letter
+ */
+function capitalizeFirst(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+/**
+ * Set minimum dates for date inputs
  */
 function setMinimumDates() {
     const today = new Date().toISOString().split('T')[0];
@@ -143,188 +177,40 @@ function setMinimumDates() {
 }
 
 /**
- * Initialize scroll effects and smooth navigation
+ * Initialize scroll effects
  */
 function initializeScrollEffects() {
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('nav a[href^="#"]').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-    
-    // Add scroll event listener for navbar background opacity
-    window.addEventListener('scroll', function() {
-        const header = document.querySelector('header');
-        if (window.scrollY > 50) {
-            header.style.backgroundColor = 'rgba(44, 62, 80, 0.95)';
-        } else {
-            header.style.backgroundColor = '#2c3e50';
-        }
-    });
+    // Add scroll animations if needed
 }
 
 /**
- * Utility function to capitalize first letter
- */
-function capitalizeFirst(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-/**
- * Form validation helper
- */
-function validateForm(form) {
-    const requiredFields = form.querySelectorAll('[required]');
-    let isValid = true;
-    
-    requiredFields.forEach(field => {
-        if (!field.value.trim()) {
-            isValid = false;
-            field.style.borderColor = '#e74c3c';
-        } else {
-            field.style.borderColor = '#ddd';
-        }
-    });
-    
-    return isValid;
-}
-
-/**
- * Email validation
- */
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-/**
- * Phone number validation
- */
-function isValidPhone(phone) {
-    const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-    return phoneRegex.test(phone.replace(/\s/g, ''));
-}
-
-/**
- * Enhanced form validation with custom messages
- */
-function validateFormWithMessages(form) {
-    const requiredFields = form.querySelectorAll('[required]');
-    let isValid = true;
-    let firstInvalidField = null;
-    
-    requiredFields.forEach(field => {
-        let fieldValid = true;
-        
-        // Check if field is empty
-        if (!field.value.trim()) {
-            fieldValid = false;
-        }
-        
-        // Email validation
-        if (field.type === 'email' && field.value.trim() && !isValidEmail(field.value)) {
-            fieldValid = false;
-        }
-        
-        // Phone validation
-        if (field.type === 'tel' && field.value.trim() && !isValidPhone(field.value)) {
-            fieldValid = false;
-        }
-        
-        // Age validation
-        if (field.name === 'age' && field.value) {
-            const age = parseInt(field.value);
-            if (age < 1 || age > 20) {
-                fieldValid = false;
-            }
-        }
-        
-        // Date validation (not in the past)
-        if (field.type === 'date' && field.value) {
-            const selectedDate = new Date(field.value);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            
-            if (selectedDate < today) {
-                fieldValid = false;
-            }
-        }
-        
-        if (!fieldValid) {
-            isValid = false;
-            field.style.borderColor = '#e74c3c';
-            if (!firstInvalidField) {
-                firstInvalidField = field;
-            }
-        } else {
-            field.style.borderColor = '#27ae60';
-        }
-    });
-    
-    // Focus on first invalid field
-    if (firstInvalidField) {
-        firstInvalidField.focus();
-        firstInvalidField.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'center' 
-        });
-    }
-    
-    return isValid;
-}
-
-/**
- * Show loading state during form submission
- */
-function showLoadingState(button) {
-    const originalText = button.textContent;
-    button.textContent = 'Submitting...';
-    button.disabled = true;
-    
-    return function() {
-        button.textContent = originalText;
-        button.disabled = false;
-    };
-}
-
-/**
- * Initialize tooltips or help text for form fields
+ * Initialize form helpers
  */
 function initializeFormHelpers() {
-    // Add helpful placeholders or tooltips
-    const ageInputs = document.querySelectorAll('input[name="age"]');
-    ageInputs.forEach(input => {
-        input.setAttribute('title', 'Enter your dog\'s age in years (1-20)');
-    });
-    
-    const emailInputs = document.querySelectorAll('input[type="email"]');
-    emailInputs.forEach(input => {
-        input.setAttribute('title', 'We\'ll use this to send booking confirmations');
-    });
-    
-    const phoneInputs = document.querySelectorAll('input[type="tel"]');
-    phoneInputs.forEach(input => {
-        input.setAttribute('title', 'Include country code for international numbers');
-    });
+    // Add any form validation or helper functions
 }
 
-// Initialize form helpers when DOM is ready
-document.addEventListener('DOMContentLoaded', initializeFormHelpers);
-
-// Export functions for potential external use
-window.K9Paradise = {
-    showServiceForm,
-    hideServiceForm,
-    validateFormWithMessages,
-    capitalizeFirst
-};
+/**
+ * Handle form submission
+ */
+function handleFormSubmission(form) {
+    // Add your form submission logic here
+    console.log('Form submitted:', form);
+    
+    // You can add success message, validation, etc.
+    const submitBtn = form.querySelector('.btn-submit');
+    if (submitBtn) {
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Submitting...';
+        submitBtn.disabled = true;
+        
+        // Simulate form submission
+        setTimeout(() => {
+            submitBtn.textContent = 'Submitted!';
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        }, 1500);
+    }
+}
